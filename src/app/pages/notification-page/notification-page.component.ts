@@ -1,12 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-notification-page',
   standalone: true,
-  imports: [],
+  imports: [TableModule, CommonModule],
   templateUrl: './notification-page.component.html',
-  styleUrl: './notification-page.component.css'
+  styleUrls: ['./notification-page.component.css']
 })
-export class NotificationPageComponent {
-
+export class NotificationPageComponent  {
+  products = [
+    { code: '001', name: 'Product A', category: 'Category 1', quantity: 100 },
+    { code: '002', name: 'Product B', category: 'Category 2', quantity: 200 },
+  ];
 }
