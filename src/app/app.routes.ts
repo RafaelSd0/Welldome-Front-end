@@ -4,6 +4,7 @@ import { NotificationPageComponent } from './pages/notification-page/notificatio
 import { GraphsComponent } from './pages/graphs/graphs.component';
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
   {
     path: 'inicio',
     component: HomeComponent,
