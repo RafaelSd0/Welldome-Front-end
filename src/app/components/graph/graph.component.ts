@@ -36,6 +36,13 @@ export class GraphComponent implements OnInit {
                     borderColor: documentStyle.getPropertyValue('--red-600'), // cor do grafico
                     tension: 0.4
                 },
+                {
+                  label: 'Doença do Mico leão baiano', // nome da doença
+                  data: [10, 40, 30, 97, 36, 65, 7], // casos por data
+                  fill: false,
+                  borderColor: documentStyle.getPropertyValue('--blue-600'), // cor do grafico
+                  tension: 0.4
+                },
             ]
         };
 
