@@ -1,20 +1,20 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { NotificationPageComponent } from './pages/notification-page/notification-page.component';
-import { GraphsComponent } from './pages/graphs/graphs.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
   {
-    path: 'inicio',
-    component: HomeComponent,
+    path: '',
+    loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent)
+  },
+  {
+    path: 'home',
+    loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent)
   },
   {
     path: 'notificacoes',
-    component: NotificationPageComponent,
+    loadComponent: () => import('./pages/notification-page/notification-page.component').then(m => m.NotificationPageComponent)
   },
   {
     path: 'graficos',
-    component: GraphsComponent,
+    loadComponent: () => import('./pages/graphs/graphs.component').then(m => m.GraphsComponent)
   }
 ];
