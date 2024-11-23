@@ -9,3 +9,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding-left: 10%;
   padding-right: 10%;
 }
+
+.background-01{
+  background-color: #c6c6c6;
+}

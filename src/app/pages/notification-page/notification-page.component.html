@@ -1,16 +1,18 @@
-<div class="card">
+
+<app-form></app-form>
+<div>
   <p-table [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
-      <!-- Cabeçalho -->
+
       <ng-template pTemplate="header">
           <tr>
-              <th>Code</th>
-              <th>Name</th>
-              <th>Category</th>
-              <th>Quantity</th>
+              <th>Cidade / Estado</th>
+              <th>Doença</th>
+              <th>Casos</th>
+              <th>Mortes</th>
           </tr>
       </ng-template>
 
-      <!-- Corpo -->
+
       <ng-template pTemplate="body" let-row>
           <tr>
               <td>{{ row.code }}</td>
@@ -20,7 +22,7 @@
           </tr>
       </ng-template>
 
-      <!-- Rodapé -->
+
       <ng-template pTemplate="footer">
           <tr>
               <td colspan="4" style="text-align: center;">Footer Content</td>

@@ -20,14 +20,20 @@ export class GraphComponent implements OnInit {
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
         const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
+        //para requisitar os dados do grafico
+        // pegar estado
+        // cidade
+        // retornar um objeto com os dados nescessarios para o funcionamento do grafico
+
+
         this.data = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'], // datas dos casos da api
             datasets: [
                 {
-                    label: 'First Dataset',
-                    data: [65, 59, 80, 81, 56, 55, 40],
+                    label: 'Coringa Virus', // nome da doença
+                    data: [65, 59, 10, 91, 76, 55, 50], // casos por data
                     fill: false,
-                    borderColor: documentStyle.getPropertyValue('--blue-500'),
+                    borderColor: documentStyle.getPropertyValue('--red-600'), // cor do grafico
                     tension: 0.4
                 },
             ]
