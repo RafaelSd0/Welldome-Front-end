@@ -1,10 +1,10 @@
-# Welldome
+## Welldome
 
-Welldome é responsável por compartilhar informações para prevenção de epidemias. Com sua rede compartilhada por hospitais <br> e postos pelo país, permite a conexão para que seja possível a notificação e visualização de surtos e epidemias <br> no local
+Welldome é responsável por compartilhar informações para prevenção de epidemias. Com sua rede compartilhada por hospitais <br> e postos pelo país, permite a conexão para que seja possível a notificação e visualização de surtos e epidemias no local
 
 ---
 
-# Recursos
+## Recursos
 
 Esse projeto foi gerado com o [Angular CLI](https://github.com/angular/angular-cli) version 18.2.10
 <br>
