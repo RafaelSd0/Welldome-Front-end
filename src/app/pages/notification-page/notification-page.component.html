@@ -1,7 +1,14 @@
 
 <app-form></app-form>
 <div class="size">
-  <p-table [value]="products" [tableStyle]="{ 'min-width': '50rem' }" >
+  <p-table
+  [value]="estados"
+  [lazy]="true"
+  [rows]="10"
+  [paginator]="true"
+  [totalRecords]="totalRecords"
+  (onLazyLoad)="loadData($event)"
+  [tableStyle]="{ 'min-width': '50rem' }" >
 
       <ng-template pTemplate="header">
           <tr>
@@ -9,23 +16,25 @@
               <th>Doença</th>
               <th>Casos</th>
               <th>Mortes</th>
+              <th>Data</th>
           </tr>
       </ng-template>
 
 
       <ng-template pTemplate="body" let-row>
           <tr>
-              <td>{{ row.code }}</td>
-              <td>{{ row.name }}</td>
-              <td>{{ row.category }}</td>
-              <td>{{ row.quantity }}</td>
+              <td>{{ row.uf }} / {{ row.nome }}</td>
+              <td>{{ row.doenca }}</td>
+              <td>{{ row.casos }}</td>
+              <td>{{ row.mortes }}</td>
+              <td>{{ row.data }}</td>
           </tr>
       </ng-template>
 
 
       <ng-template pTemplate="footer">
           <tr>
-              <td colspan="4" style="text-align: center;">Footer Content</td>
+              <td colspan="5" style="text-align: center;">Footer Content</td>
           </tr>
       </ng-template>
   </p-table>

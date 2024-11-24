@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { FormComponent } from "../../components/form/form.component";
+import { APIwelldomeService } from '../../services/apiwelldome.service';
 
 @Component({
   selector: 'app-notification-page',
@@ -10,13 +11,31 @@ import { FormComponent } from "../../components/form/form.component";
   templateUrl: './notification-page.component.html',
   styleUrls: ['./notification-page.component.css']
 })
-export class NotificationPageComponent  {
-  products = [
-    { code: '001', name: 'Product A', category: 'Category 1', quantity: 100 },
-    { code: '002', name: 'Product B', category: 'Category 2', quantity: 200 },
-  ];
+export class NotificationPageComponent implements OnInit  {
+  estados: any[] = [];
+  totalRecords: number = 0;
+  loading: boolean = false;
 
+  constructor(private apiService: APIwelldomeService) {}
 
+  ngOnInit() {
+    // Carregar os registros totais na inicialização
+    this.apiService.getEstados().subscribe((data) => {
+      this.totalRecords = data.length; // Define o número total de registros
+    });
+  }
 
-  // pegar os dados da api e transformar em um array de objetos
+  loadData(event: any) {
+    this.loading = true;
+
+    // Determinar o índice inicial e final
+    const start = event.first; // Índice inicial
+    const end = start + event.rows; // Índice final
+
+    // Simulação: Filtro de dados no back-end (ajuste para chamar uma API com paginação, se disponível)
+    this.apiService.getEstados().subscribe((data) => {
+      this.estados = data.slice(start, end);
+      this.loading = false;
+    });
+  }
 }
