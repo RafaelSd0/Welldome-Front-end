@@ -1,27 +1,22 @@
 # Welldome
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.10.
+Welldome é responsável por compartilhar informações para prevenção de epidemias. Com sua rede compartilhada por hospitais <br> e postos pelo país, permite a conexão para que seja possível a notificação e visualização de surtos e epidemias <br> no local
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+# Recursos
 
-## Code scaffolding
+Esse projeto foi gerado com o [Angular CLI](https://github.com/angular/angular-cli) version 18.2.10
+<br>
+Usando a blilioteca do [Prime NG](https://primeng.org/)
+<br>
+Usa uma API Rest em node js [WelldomeAPI](https://github.com/RafaelSd0/Welldome_Back-end).
+---
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Deploy
 
-## Build
+Deploy no Vercell [Welldome front end](https://welldome-front-end.vercel.app/)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+---
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 
