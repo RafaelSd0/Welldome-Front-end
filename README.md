@@ -4,13 +4,13 @@ Welldome é responsável por compartilhar informações para prevenção de epid
 
 ---
 
-## Recursos
+## Recursos 
 
-Esse projeto foi gerado com o [Angular CLI](https://github.com/angular/angular-cli) version 18.2.10
+Esse projeto foi gerado com o [Angular CLI](https://github.com/angular/angular-cli) verção 18.2.10
 <br>
 Usando a blilioteca do [Prime NG](https://primeng.org/)
 <br>
-Usa uma API Rest em node js [WelldomeAPI](https://github.com/RafaelSd0/Welldome_Back-end).
+Usa uma API Rest em node js [WelldomeAPI](https://github.com/RafaelSd0/Welldome_Back-end)
 
 
 ---
@@ -21,4 +21,8 @@ Deploy no Vercell [Welldome front end](https://welldome-front-end.vercel.app/)
 
 ---
 
-## 
+## 🚀 Instalação
+
+lembre-se de instalar o Angular verção 18.2.10
+
+- 
