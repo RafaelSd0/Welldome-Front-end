@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
+import { APIwelldomeService } from '../../services/apiwelldome.service';
 
 @Component({
   selector: 'app-graph',
@@ -10,73 +11,126 @@ import { ChartModule } from 'primeng/chart';
 })
 export class GraphComponent implements OnInit {
 
+  constructor(private api: APIwelldomeService){}
+
+
+
   data: any;
 
-    options: any;
+  options: any;
 
-    ngOnInit() {
-        const documentStyle = getComputedStyle(document.documentElement);
-        const textColor = documentStyle.getPropertyValue('--text-color');
-        const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-        const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+  // toda as notificaçoes
+  estados: any[] = [];
+  // todos as notificaçoes de um estado
+  estadosFiltrados: any[] = []
+  // casos e mortes do estado filtrado
+  casos: number[] = []
+  mortes: number[] = []
+  // opcao escolhida da barra de pesquisa
+  estadoSelecionado: string = 'SP' // São paulo por padrão
 
-        //para requisitar os dados do grafico
-        // pegar estado
-        // cidade
-        // retornar um objeto com os dados nescessarios para o funcionamento do grafico
+  ngOnInit() {
+    const documentStyle = getComputedStyle(document.documentElement);
+    const textColor = documentStyle.getPropertyValue('--text-color');
+    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
+    // Configurações iniciais do gráfico
+    this.data = {
+      labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+      datasets: [
+        {
+          label: 'Casos',
+          data: this.casos, // Inicialmente vazio
+          fill: false,
+          borderColor: documentStyle.getPropertyValue('--red-600'),
+          tension: 0.4,
+        },
+        {
+          label: 'Mortes',
+          data: this.mortes, // Inicialmente vazio
+          fill: false,
+          borderColor: documentStyle.getPropertyValue('--yellow-600'),
+          tension: 0.4,
+        },
+      ],
+    };
+
+    this.options = {
+      maintainAspectRatio: false,
+      aspectRatio: 0.6,
+      plugins: {
+        legend: {
+          labels: {
+            color: textColor,
+          },
+        },
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: textColorSecondary,
+          },
+          grid: {
+            color: surfaceBorder,
+            drawBorder: false,
+          },
+        },
+        y: {
+          ticks: {
+            color: textColorSecondary,
+          },
+          grid: {
+            color: surfaceBorder,
+            drawBorder: false,
+          },
+        },
+      },
+    };
+
+    // Carregar os estados e atualizar o gráfico dinamicamente
+    this.carregarEstados();
+  }
+
+  carregarEstados(): void {
+    this.api.getEstados().subscribe(
+      (dados) => {
+        this.estados = dados;
+        console.log('Estados carregados:', this.estados);
+
+        this.filtrarPorEstado();
+        this.atualizarGrafico();
+        this.filtrarMortesDoEstado();
+        this.filtrarCasosDoEstado();
+      },
+      (erro) => {
+        console.error('Erro ao carregar os estados:', erro);
+      }
+    );
+  }
 
 
-        this.data = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'], // datas dos casos da api
-            datasets: [
-                {
-                    label: 'Coringa Virus', // nome da doença
-                    data: [65, 59, 10, 91, 76, 55, 50], // casos por data
-                    fill: false,
-                    borderColor: documentStyle.getPropertyValue('--red-600'), // cor do grafico
-                    tension: 0.4
-                },
-                {
-                  label: 'Doença do Mico leão baiano', // nome da doença
-                  data: [10, 40, 30, 97, 36, 65, 7], // casos por data
-                  fill: false,
-                  borderColor: documentStyle.getPropertyValue('--blue-600'), // cor do grafico
-                  tension: 0.4
-                },
-            ]
-        };
+  atualizarGrafico(): void {
+    this.data.datasets[0].data = this.estadosFiltrados.map((estado) => estado.casos);
+    this.data.datasets[1].data = this.estadosFiltrados.map((estado) => estado.mortes);
+    console.log('Dados atualizados no gráfico:', this.data);
+  }
 
-        this.options = {
-            maintainAspectRatio: false,
-            aspectRatio: 0.6,
-            plugins: {
-                legend: {
-                    labels: {
-                        color: textColor
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    ticks: {
-                        color: textColorSecondary
-                    },
-                    grid: {
-                        color: surfaceBorder,
-                        drawBorder: false
-                    }
-                },
-                y: {
-                    ticks: {
-                        color: textColorSecondary
-                    },
-                    grid: {
-                        color: surfaceBorder,
-                        drawBorder: false
-                    }
-                }
-            }
-        };
-    }
+  filtrarPorEstado(): void {
+    this.estadosFiltrados = this.estados.filter(
+      (estado) => estado.uf === this.estadoSelecionado
+    );
+    console.log('Estados filtrados:', this.estadosFiltrados);
+  }
+
+  filtrarCasosDoEstado(): void {
+    this.casos = this.estadosFiltrados.map(estado => estado.casos);
+    console.log('Casos:', this.casos);
+  }
+
+  filtrarMortesDoEstado(): void {
+    this.mortes = this.estadosFiltrados.map(estado => estado.mortes);
+    console.log('Mortes:', this.mortes);
+  }
 
 }

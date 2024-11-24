@@ -1,47 +1,50 @@
-import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { AutoCompleteModule } from 'primeng/autocomplete';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
-import { FloatLabelModule } from 'primeng/floatlabel';
+import { DropdownModule } from 'primeng/dropdown';
+import { APIwelldomeService } from '../../services/apiwelldome.service';
 
 @Component({
   selector: 'app-form',
   standalone: true,
-  imports: [AutoCompleteModule, FormsModule, FloatLabelModule],
+  imports: [FormsModule, DropdownModule],
   templateUrl: './form.component.html',
-  styleUrl: './form.component.css'
+  styleUrls: ['./form.component.css']
 })
-export class FormComponent {
-  countries: any[] = [
-    { name: 'Switzerland', code: 'CH' },
-    { name: 'Germany', code: 'DE' },
-    { name: 'United States', code: 'US' },
-    { name: 'Brazil', code: 'BR' },
-    { name: 'Canada', code: 'CA' },
-    { name: 'Australia', code: 'AU' },
-    { name: 'France', code: 'FR' },
-    { name: 'Japan', code: 'JP' },
-    { name: 'India', code: 'IN' },
-    { name: 'China', code: 'CN' }
-  ];
+export class FormComponent implements OnInit {
+  estadosDisponiveis: { name: string, value: string }[] = [];
+  estadoSelecionado: string = '';
 
-  // Formulário com país inicial
-  countryFormGroup: FormGroup = new FormGroup({
-    country: new FormControl({ name: 'Switzerland', code: 'CH' })
-  });
+  constructor(private apiService: APIwelldomeService) {}
 
-  // Países filtrados
-  filteredCountries: { name: string; code: string }[] = [];
-
-  /**
-   * Método para filtrar países com base no evento de autocomplete.
-   */
-  filterCountry(event: AutoCompleteCompleteEvent): void {
-    const query = event.query.toLowerCase(); // Normaliza para evitar problemas de maiúsculas/minúsculas
-    this.filteredCountries = this.countries.filter(country =>
-      country.name.toLowerCase().startsWith(query)
-    );
+  ngOnInit(): void {
+    this.estadosDisponiveis = [
+      { name: 'AC', value: 'AC' },
+      { name: 'AL', value: 'AL' },
+      { name: 'AM', value: 'AM' },
+      { name: 'AP', value: 'AP' },
+      { name: 'BA', value: 'BA' },
+      { name: 'CE', value: 'CE' },
+      { name: 'DF', value: 'DF' },
+      { name: 'ES', value: 'ES' },
+      { name: 'GO', value: 'GO' },
+      { name: 'MA', value: 'MA' },
+      { name: 'MG', value: 'MG' },
+      { name: 'MS', value: 'MS' },
+      { name: 'MT', value: 'MT' },
+      { name: 'PA', value: 'PA' },
+      { name: 'PB', value: 'PB' },
+      { name: 'PE', value: 'PE' },
+      { name: 'PI', value: 'PI' },
+      { name: 'PR', value: 'PR' },
+      { name: 'RJ', value: 'RJ' },
+      { name: 'RN', value: 'RN' },
+      { name: 'RO', value: 'RO' },
+      { name: 'RR', value: 'RR' },
+      { name: 'RS', value: 'RS' },
+      { name: 'SC', value: 'SC' },
+      { name: 'SE', value: 'SE' },
+      { name: 'SP', value: 'SP' },
+      { name: 'TO', value: 'TO' }
+    ];
   }
-
 }

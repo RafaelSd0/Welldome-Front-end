@@ -1,29 +1,11 @@
 <div class="form">
-  <p-floatLabel>
-    <p-autoComplete
-      [dropdown]="true"
-      [showClear]="true"
-      [suggestions]="filteredCountries"
-      [suggestions]="filteredCountries"
-      (completeMethod)="filterCountry($event)"
-      inputId="Cidade"
-      field="name" />
-      <label for="Cidade">Cidade</label>
-  </p-floatLabel>
-
- <p-floatLabel>
-  <p-autoComplete
-  [dropdown]="true"
-  [showClear]="true"
-  [suggestions]="filteredCountries"
-  [suggestions]="filteredCountries"
-  (completeMethod)="filterCountry($event)"
-  inputId="Estado"
-  field="code" />
-  <label for="Estado">Estado</label>
- </p-floatLabel>
-
-
+  <p-dropdown
+  [options]="estadosDisponiveis"
+  [(ngModel)]="estadoSelecionado"
+  optionLabel="name"
+  placeholder="Selecione um Estado">
+  </p-dropdown>
 </div>
+
 
 
