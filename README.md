@@ -11,6 +11,8 @@ Esse projeto foi gerado com o [Angular CLI](https://github.com/angular/angular-c
 Usando a blilioteca do [Prime NG](https://primeng.org/)
 <br>
 Usa uma API Rest em node js [WelldomeAPI](https://github.com/RafaelSd0/Welldome_Back-end).
+
+
 ---
 
 ## Deploy
