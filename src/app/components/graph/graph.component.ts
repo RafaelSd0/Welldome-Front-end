@@ -1,54 +1,59 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 import { APIwelldomeService } from '../../services/apiwelldome.service';
+import { EstadoService } from '../../services/estado.service';
 
 @Component({
   selector: 'app-graph',
   standalone: true,
   imports: [ChartModule],
   templateUrl: './graph.component.html',
-  styleUrl: './graph.component.css'
+  styleUrls: ['./graph.component.css'],
 })
 export class GraphComponent implements OnInit {
-
-  constructor(private api: APIwelldomeService){}
-
-
-
   data: any;
-
   options: any;
 
-  // toda as notificaçoes
-  estados: any[] = [];
-  // todos as notificaçoes de um estado
-  estadosFiltrados: any[] = []
-  // casos e mortes do estado filtrado
-  casos: number[] = []
-  mortes: number[] = []
-  // opcao escolhida da barra de pesquisa
-  estadoSelecionado: string = 'SP' // São paulo por padrão
+  estados: any[] = []; // Todas as notificações
+  estadosFiltrados: any[] = []; // Notificações de um estado específico
+  casos: number[] = []; // Casos filtrados
+  mortes: number[] = []; // Mortes filtradas
+  estado!: string | null; // Estado selecionado
 
-  ngOnInit() {
+  constructor(
+    private api: APIwelldomeService,
+    private estadoService: EstadoService
+  ) {}
+
+  ngOnInit(): void {
+    this.inicializarGrafico();
+
+    // Atualiza o gráfico ao mudar o estado selecionado
+    this.estadoService.estadoSelecionado$.subscribe((estado) => {
+      this.estado = estado;
+      this.carregarEstados(); // Filtra e atualiza os dados dinamicamente
+    });
+  }
+
+  inicializarGrafico(): void {
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
     const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
-    // Configurações iniciais do gráfico
     this.data = {
       labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
       datasets: [
         {
           label: 'Casos',
-          data: this.casos, // Inicialmente vazio
+          data: [], // Inicialmente vazio
           fill: false,
           borderColor: documentStyle.getPropertyValue('--red-600'),
           tension: 0.4,
         },
         {
           label: 'Mortes',
-          data: this.mortes, // Inicialmente vazio
+          data: [], // Inicialmente vazio
           fill: false,
           borderColor: documentStyle.getPropertyValue('--yellow-600'),
           tension: 0.4,
@@ -87,21 +92,13 @@ export class GraphComponent implements OnInit {
         },
       },
     };
-
-    // Carregar os estados e atualizar o gráfico dinamicamente
-    this.carregarEstados();
   }
 
   carregarEstados(): void {
     this.api.getEstados().subscribe(
       (dados) => {
         this.estados = dados;
-        console.log('Estados carregados:', this.estados);
-
-        this.filtrarPorEstado();
-        this.atualizarGrafico();
-        this.filtrarMortesDoEstado();
-        this.filtrarCasosDoEstado();
+        this.atualizarFiltragemEGráfico(); // Atualiza após carregar os dados
       },
       (erro) => {
         console.error('Erro ao carregar os estados:', erro);
@@ -109,28 +106,31 @@ export class GraphComponent implements OnInit {
     );
   }
 
-
-  atualizarGrafico(): void {
-    this.data.datasets[0].data = this.estadosFiltrados.map((estado) => estado.casos);
-    this.data.datasets[1].data = this.estadosFiltrados.map((estado) => estado.mortes);
-    console.log('Dados atualizados no gráfico:', this.data);
-  }
-
-  filtrarPorEstado(): void {
+  atualizarFiltragemEGráfico(): void {
+    // Filtra os dados pelo estado selecionado
     this.estadosFiltrados = this.estados.filter(
-      (estado) => estado.uf === this.estadoSelecionado
+      (estado) => estado.uf === this.estado
     );
-    console.log('Estados filtrados:', this.estadosFiltrados);
-  }
 
-  filtrarCasosDoEstado(): void {
-    this.casos = this.estadosFiltrados.map(estado => estado.casos);
-    console.log('Casos:', this.casos);
-  }
+    this.casos = this.estadosFiltrados.map((estado) => estado.casos);
+    this.mortes = this.estadosFiltrados.map((estado) => estado.mortes);
 
-  filtrarMortesDoEstado(): void {
-    this.mortes = this.estadosFiltrados.map(estado => estado.mortes);
-    console.log('Mortes:', this.mortes);
+    // Recria o objeto "data" para forçar a atualização do gráfico
+    this.data = {
+      ...this.data,
+      datasets: [
+        {
+          ...this.data.datasets[0], // Mantém as configurações do dataset de casos
+          data: this.casos,
+        },
+        {
+          ...this.data.datasets[1], // Mantém as configurações do dataset de mortes
+          data: this.mortes,
+        },
+      ],
+    };
+
+    console.log('Gráfico atualizado:', this.data);
   }
 
 }

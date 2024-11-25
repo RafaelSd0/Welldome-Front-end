@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
-import { APIwelldomeService } from '../../services/apiwelldome.service';
+import { EstadoService } from '../../services/estado.service';
 
 @Component({
   selector: 'app-form',
@@ -12,9 +12,13 @@ import { APIwelldomeService } from '../../services/apiwelldome.service';
 })
 export class FormComponent implements OnInit {
   estadosDisponiveis: { name: string, value: string }[] = [];
-  estadoSelecionado: string = '';
+  estadoSelecionado: any;
 
-  constructor(private apiService: APIwelldomeService) {}
+  constructor (private estadoService: EstadoService){}
+
+  onEstadoChange(event: any): void {
+    this.estadoService.setEstadoSelecionado(this.estadoSelecionado.value); // Passa ao serviço
+  }
 
   ngOnInit(): void {
     this.estadosDisponiveis = [
@@ -47,4 +51,5 @@ export class FormComponent implements OnInit {
       { name: 'TO', value: 'TO' }
     ];
   }
+
 }

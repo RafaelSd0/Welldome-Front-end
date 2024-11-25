@@ -3,8 +3,9 @@
   [options]="estadosDisponiveis"
   [(ngModel)]="estadoSelecionado"
   optionLabel="name"
-  placeholder="Selecione um Estado">
-  </p-dropdown>
+  placeholder="Selecione um Estado"
+  (onChange)="onEstadoChange($event)"
+  ></p-dropdown>
 </div>
 
 
