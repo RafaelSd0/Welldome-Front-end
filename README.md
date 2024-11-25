@@ -27,7 +27,7 @@ Deploy no Vercell [Welldome front end](https://welldome-front-end.vercel.app/)
 
 ---
 
-### Pré-requisitos 🌟
+## Pré-requisitos 🌟
 
 Certifique-se de ter o **Node.js** e o **Angular CLI** instalados no seu computador. 
 
@@ -76,6 +76,7 @@ Acesse a aplicação em http://localhost:4200.
 ---
 
 ## Contribuindo
+
 Se você deseja contribuir com o projeto, por favor, siga os seguintes passos:
 
 Fork este repositório.
